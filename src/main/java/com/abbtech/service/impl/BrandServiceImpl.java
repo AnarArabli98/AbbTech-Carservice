@@ -1,5 +1,7 @@
 package com.abbtech.service.impl;
 
+import com.abbtech.annotation.LogIgnore;
+import com.abbtech.annotation.SpringTransactionAnnotation;
 import com.abbtech.dto.ModelDto;
 import com.abbtech.dto.ReqBrandDto;
 import com.abbtech.dto.RespBrandDto;
@@ -44,6 +46,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional
+    @SpringTransactionAnnotation(rollbackFor = CarException.class,readOnly = false)
     public void addBrand(ReqBrandDto brandDto) {
         var brand = Brand.builder()
                 .name(brandDto.name())

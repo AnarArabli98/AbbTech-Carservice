@@ -1,8 +1,10 @@
 package com.abbtech.service.security;
 
+import com.abbtech.annotation.SpringTransactionAnnotation;
 import com.abbtech.dto.security.RegisterRequestDto;
 import com.abbtech.exception.AuthErrorEnum;
 import com.abbtech.exception.AuthException;
+import com.abbtech.exception.CarException;
 import com.abbtech.model.AppUser;
 import com.abbtech.model.Role;
 import com.abbtech.repository.secirity.RoleRepository;
@@ -24,6 +26,7 @@ public class RegisterService {
     private final PasswordEncoder encoder;
 
     @Transactional
+    @SpringTransactionAnnotation(rollbackFor = CarException.class,readOnly = false)
     public void register(RegisterRequestDto req) {
 
         if (userRepo.findByUsername(req.username()).isPresent()) {
